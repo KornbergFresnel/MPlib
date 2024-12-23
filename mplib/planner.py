@@ -815,7 +815,9 @@ class Planner:
             self.planning_world.set_qpos_all(current_qpos[move_joint_idx])
             collide = self.planning_world.is_state_colliding()
 
+            # if np.linalg.norm(delta_twist) < 1e-4 or collide or not within_joint_limit:
             if np.linalg.norm(delta_twist) < 1e-4 or collide or not within_joint_limit:
+                return {"status": "screw plan failed"}
                 return {"status": "screw plan failed"}
 
             path.append(np.copy(current_qpos[move_joint_idx]))
